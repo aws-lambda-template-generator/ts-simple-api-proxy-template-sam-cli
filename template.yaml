@@ -15,19 +15,14 @@ Resources:
   HelloWorldGqFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      Handler: ./dist/index.grapqlHandler # name of the handler function in src/handler.js
+      Handler: ./dist/main.example # name of the handler function in src/handler.js
       Runtime: nodejs14.x
       Events:
         HelloWorldGq:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /graphql
+            Path: /get-users
             Method: get
-        HelloWorldGqPost:
-          Type: Api
-          Properties:
-            Path: /graphql
-            Method: post
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

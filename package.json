@@ -9,8 +9,9 @@
     "test": "nyc --reporter=html --reporter=text mocha --require source-map-support/register -r ts-node/register test/**/*.spec.ts",
     "test:watch": "mocha --require source-map-support/register -r ts-node/register --watch-files src, test/**/*.spec.ts --watch",
     "integration": "nyc --reporter=html --reporter=text mocha -r ts-node/register --recursive --timeout 5000 integration/**/*.ts",
-    "deploy": "sls deploy",
-    "remove": "sls remove"
+    "dev": "yarn webpack-build && sam local start-api",
+    "deploy": "sam ...",
+    "remove": "sam ..."
   },
   "repository": {
     "type": "git",
