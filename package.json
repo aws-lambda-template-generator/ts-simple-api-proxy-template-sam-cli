@@ -11,7 +11,7 @@
     "integration": "nyc --reporter=html --reporter=text mocha -r ts-node/register --recursive --timeout 5000 integration/**/*.ts",
     "dev": "yarn webpack-build && sam local start-api",
     "deploy": "sam ...",
-    "remove": "sam ..."
+    "remove": "aws cloudformation delete-stack --stack-name ts-simple-api-proxy-with-sam"
   },
   "repository": {
     "type": "git",
