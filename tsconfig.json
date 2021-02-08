@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": ".aws-sam/dist",
     "module": "commonjs",
     "target": "es2017",
     "lib": ["es2017"],
