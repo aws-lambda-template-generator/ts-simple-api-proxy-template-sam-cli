@@ -6,10 +6,21 @@ Description: >
 
   Sample SAM Template for ts-simple-api-proxy
 
+# We can add parameters
+Parameters:
+  ApiStageName:
+    Type: String
+    Default: test
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 120
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
 
 Resources:
   TsSimpleApiProxyFunction:
@@ -19,28 +30,38 @@ Resources:
       Handler: ./dist/main.example # name of the handler function in src/handler.js
       Runtime: nodejs12.x
       Description: Example Lambda Function
+      FunctionName: ts-simple-api-proxy-with-sam
       MemorySize: 1024
       Timeout: 15
       Events:
         TsSimpleApiProxy:
           Type: Api # Creates API Gateway. More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            # StageName: prod
             Path: /get-users
             Method: get
+            RestApiId: !Ref ApiDeployment # This defines the stage name.
       Policies: # Creates IAM Role
         # We can choose from a list of policy templates which are specific to SAM
         # See: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
         - SSMParameterReadPolicy:
             ParameterName: mock-parameter # For this policy, ParameterName is required
+  ApiDeployment:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref ApiStageName # This is where we can set stage name
+
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   TsSimpleApiProxyApi:
-    Description: "API Gateway endpoint URL for Prod stage for function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-users"
+    Description: "API Gateway endpoint URL for function"
+    # To add stage, ServerlessRestApi needs to be changed to the name of the resources define AWS::Serverless:Api. 
+    # Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/test/get-users" # This is the default
+    # We can refer any top level parameter with ${NameOfParameter}.
+    Value: !Sub "https://${ApiDeployment}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}/get-users"
+
   TsSimpleApiProxyFunction:
     Description: "Lambda Function ARN"
     Value: !GetAtt TsSimpleApiProxyFunction.Arn
