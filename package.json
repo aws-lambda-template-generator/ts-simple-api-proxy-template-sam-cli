@@ -10,7 +10,7 @@
     "test:watch": "mocha --require source-map-support/register -r ts-node/register --watch-files src, test/**/*.spec.ts --watch",
     "integration": "nyc --reporter=html --reporter=text mocha -r ts-node/register --recursive --timeout 5000 integration/**/*.ts",
     "dev": "yarn webpack-build && sam local start-api",
-    "pre-deploy": "yarn webpack-build && sam build && cp -R ./dist ./.aws-sam/build",
+    "pre-deploy": "yarn webpack-build && sam build && cp -R ./dist ./.aws-sam/build && cp -R ./dist ./.aws-sam/build/TsSimpleApiProxyFunction",
     "deploy-example": "sam deploy --s3-bucket test.lambdafunction.bucket --s3-prefix simpleapiproxy",
     "remove": "aws cloudformation delete-stack --stack-name ts-simple-api-proxy-with-sam"
   },

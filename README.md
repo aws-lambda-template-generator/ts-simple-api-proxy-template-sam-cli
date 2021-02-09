@@ -22,12 +22,8 @@ sam local invoke
 sam local start-api
 
 # Test with curl
-curl -X POST http://127.0.0.1:3000/graphql --data '{"query": "{hello}"}'
+curl http://127.0.0.1:3000/get-users
 ```
-
-Playground is available.
-
-Go to `http://localhost:3000/test/graphql`. You may need to change the actual query url within the query tab to `http://localhost:3000/test/graphql/profile`
 
 3. Deploy the function
 
@@ -52,3 +48,11 @@ There are two configuration files for SAM in this example
 
 - samconfig.toml
   - This file is a project-level configuration file that stores default parameters.
+
+## .aws-sam folder
+
+Once it is deployed to AWS, code runs from build/dist folder. For the local develoopment, it runs from build/TsSimpleApiProxyFunction. Therefore, the first copy is for actual lambda execution environment and second copy is for local.
+
+```bash
+yarn webpack-build && sam build && cp -R ./dist ./.aws-sam/build && cp -R ./dist ./.aws-sam/build/TsSimpleApiProxyFunction
+```
