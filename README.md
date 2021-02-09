@@ -13,10 +13,11 @@ sam build
 2. Testing lambda locally
 
 ```bash
+# We first build and copy dist files into .aws-sam
+yarn pre-deploy
+
 # With an example event data - this works
 sam local invoke
-
-# Or we can be a bit more specific
 
 # Startup API Gateway and Lambda in a container
 sam local start-api
@@ -51,8 +52,5 @@ There are two configuration files for SAM in this example
 
 ## .aws-sam folder
 
-Once it is deployed to AWS, code runs from build/dist folder. For the local develoopment, it runs from build/TsSimpleApiProxyFunction. Therefore, the first copy is for actual lambda execution environment and second copy is for local.
+By default SAM CLI pushes the function from build/TsSimpleApiProxyFunction. Therefore, the dist folder has to be copied into it. 
 
-```bash
-yarn webpack-build && sam build && cp -R ./dist ./.aws-sam/build && cp -R ./dist ./.aws-sam/build/TsSimpleApiProxyFunction
-```

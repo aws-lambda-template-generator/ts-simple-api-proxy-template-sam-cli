@@ -15,7 +15,7 @@ Resources:
   TsSimpleApiProxyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri:
+      CodeUri: ./ # This has to be either the local folder where we have package.json or S3 bucket
       Handler: ./dist/main.example # name of the handler function in src/handler.js
       Runtime: nodejs12.x
       Description: Example Lambda Function
