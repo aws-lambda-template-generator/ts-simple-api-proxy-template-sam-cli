@@ -28,7 +28,7 @@ Resources:
     Properties:
       CodeUri: ./ # This has to be either the local folder where we have package.json or S3 bucket
       Handler: ./dist/main.example # name of the handler function in src/handler.js
-      Runtime: nodejs12.x
+      Runtime: nodejs16.x
       Description: Example Lambda Function
       FunctionName: ts-simple-api-proxy-with-sam
       MemorySize: 1024
